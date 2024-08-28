@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>ระบบวิเคราะห์ข้อมูลจราจรเครือข่าย</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <div class="sidebar-brand-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/th/thumb/e/ed/Walailak_University_Logo.svg/1200px-Walailak_University_Logo.svg.png" alt="Walailak University Logo" style="height: 50px;">
+                </div>
+                <div class="sidebar-brand-text mx-3">ระบบวิเคราะห์ข้อมูลจราจรเครือข่าย</div>
+            </a>
+            
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/date">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>เลือกข้อมูลรายวัน</span></a>
+            </li>
+            <!-- <li class="nav-item active">
+                <a class="nav-link" href="/week">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Weekly</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/month">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Monthly</span></a>
+            </li> -->
+            
+
+           
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+
+
+                <!-- PDF Generate -->
+                    
+                   <!--  <form action="/generate_pdf" method="post">
+                            <button type="submit">Generate PDF</button>
+                        </form>
+                    -->
+                    <form action="/generate_pdf_date" method="post" class="text-center">
+                        <input type="hidden" name="start_date" value="{{ start_date }}">
+                        <input type="hidden" name="end_date" value="{{ end_date }}">
+                        <button type="submit" class="btn btn-primary btn-lg mt-2">ส่งผลสรุปรายงาน</button>
+                    </form>
+                    
+                    
+
+
+
+                <!-- END PDF Generate -->
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+              
+
+                    
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">เลือกวันที่่</h6>
+                                </div>
+                                
+                                    
+                                    <div class="card-body">
+                                        <form action="/process_date" method="post" onsubmit="return checkDates();">
+                                            <div class="form-group">
+                                                <label for="start_date">วันเริ่มต้น:</label>
+                                                <input  type="date" class="form-control" name="start_date" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="end_date">วันสิ้นสุด:</label>
+                                                <input type="date" class="form-control" name="end_date" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <input type="hidden" name="type" value="date">
+                                        </form>
+                                    </div>
+                                    
+                                    
+
+                          
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">เลือกเวลา</h6>
+                                </div>
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        // Function to format date as YYYY-MM-DD
+                                        function formatDate(date) {
+                                            let d = new Date(date),
+                                                month = '' + (d.getMonth() + 1),
+                                                day = '' + d.getDate(),
+                                                year = d.getFullYear();
+                                    
+                                            if (month.length < 2) 
+                                                month = '0' + month;
+                                            if (day.length < 2) 
+                                                day = '0' + day;
+                                    
+                                            return [year, month, day].join('-');
+                                        }
+                                    
+                                        // Set the value of start_date to today's date
+                                        document.getElementById('start_date').value = formatDate(new Date());
+                                    });
+                                    </script>
+                                    
+                                <div class="card-body">
+                                        <form action="/process_date" method="post">
+                                            <div class="form-group">
+                                                <label for="select_time">เวลา:</label>
+                                                <select class="form-control" name="select_time">
+                                                    <option value="00:05:00">00:05:00</option>
+                                                    <option value="00:10:00">00:10:00</option>
+                                                    <option value="00:15:00">00:15:00</option>
+                                                    <option value="00:30:00">00:30:00</option>
+                                                    <option value="01:00:00">01:00:00</option>
+                                                    <option value="03:00:00">03:00:00</option>
+                                                    <option value="06:00:00">06:00:00</option>
+                                                    <option value="12:00:00">12:00:00</option>
+                                                </select>
+                                            </div>
+                                            <input type="hidden" name="start_date" id="start_date">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <input type="hidden" name="type" value="time">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">วันที่่</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                            <h4>วันที่่เริ่มต้น: <span class="text-info">{{ start_date | default(today) }}</span> &nbsp;&nbsp;&nbsp; วันที่่สิ้นสุด: <span class="text-info">{{ end_date | default(today) }}</span></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                     
+                    <!-- Content Row -->
+
+                    <div class="row">
+
+                        <!-- Area Chart -->
+                        <div class="col-xl-5 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">15 Bandwidth Usage ด้วย Application </h6>
+                                    
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center;">ที่</th>
+                                                    <th style="text-align: center;">Application</th>
+                                                    <th style="text-align: center;">Bandwidth Usage (GB)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for row in table_data %}
+                                                    <tr>
+                                                        <td style="text-align: center;">{{ row[0] }}</td>
+                                                        <td>{{ row[1] }}</td>
+                                                        <td  style="text-align: right;">{{ row[2]|int }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                      
+                        
+
+                        <!-- Pie Chart -->
+                        <div class="col-xl-7 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">15 Bandwidth Usage ด้วย Application</h6>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{ pie_src }}" alt="Pie Chart">
+                                </div>
+                                
+                            </div>
+                        </div>
+                               
+                    
+                        <!-- Stack bar
+                        <div class="col-xl-12 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">15 Bandwidth Usage by Application(Hour) </h6>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{ plot_src }}" alt="Stacked Bar Chart" class="img-fluid">
+                                </div>
+                            </div> 
+                        </div> --> 
+
+                        <div class="col-xl-12 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">15 Bandwidth Usage ด้วย Source IP</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center;">ที่่</th>
+                                                    <th style="text-align: center;">Application</th>
+                                                    <th style="text-align: center;">Source IP</th>
+                                                        <th style="text-align: center;">Bandwidth Usage (GB)</th>
+                                                    
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for row in table_data_source %}
+                                                <tr>
+                                                    <td style="text-align: center;">{{ row[0] }}</td>
+                                                    <td>{{ row[1] }}</td>
+                                                    <td>{{ row[2] }}</td>
+                                                    <td style="text-align: right;">{{ row[3]|int }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-xl-5 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">15 Bandwidth Usage ด้วย Destination Port</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center;">ที่่</th>
+                                                    <th style="text-align: center;">Destination Port</th>
+                                                    <th style="text-align: center;">Bandwidth Usage (GB)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for row in table_data_dstport %}
+                                                    <tr>
+                                                        <td style="text-align: center;">{{ row[0] }}</td>
+                                                        <td>{{ row[1] }}</td>
+                                                        <td style="text-align: right;">{{ row[2]|int }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Pie Chart -->
+                        <div class="col-xl-7 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">15 Bandwidth Usage ด้วย Destination Port</h6>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{ pie_src_dst }}" alt="Pie Chart">
+                                </div>
+                            </div>
+                        </div>
+                        
+                           
+
+                       
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="static/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="static/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="static/js/demo/chart-area-demo.js"></script>
+    <script src="static/js/demo/chart-pie-demo.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report for WU Monitoring</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            display: block;
+            max-width: 100%;
+            margin: 0 auto;
+            margin-bottom: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Start Date: <span class="text-info">{{ start_date | default(today) }}</span> &nbsp;&nbsp;&nbsp; End Date: <span class="text-info">{{ end_date | default(today) }}</span></h1>
+        <h1>Top 15 Bandwidth Usage</h1>
+        <!-- Table Data -->
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Application</th>
+                    <th>Bandwidth Usage (GB)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in table_data_app %}
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                    <td>{{ item[2]|int }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <h1><center>15 Bandwidth Usage by Application</center></h1>
+        <!-- Pie Chart for Top 15 Bandwidth Usage by Application -->
+        <img src="{{ pie_src }}" alt="Pie Chart for Top 15 Bandwidth Usage by Application">
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+
+
+        
+        <h1><center>15 Bandwidth Usage by Source IP</center></h1>
+        
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Application</th>
+                    <th>Source IP</th>
+                
+                    <th>Bandwidth Usage (GB)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in table_data_source %}
+                <tr>
+                    <td>{{ item[0] }}</td>
+                    <td>{{ item[1] }}</td>
+                    <td>{{ item[2] }}</td>
+           
+                    <td>{{ item[3]|int }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br>
+        <h1><center>15 Bandwidth Usage by Destination Port</center></h1>
+
+        <!-- Table Data for Top 15 Bandwidth Usage by Source IP -->
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Destination Port</th>
+                    <th>Bandwidth Usage (GB)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in table_data_dstport %}
+                    <tr>
+                        <td>{{ item[0] }}</td>
+                        <td>{{ item[1] }}</td>
+                        <td>{{ item[2]|int }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <h1><center>15 Bandwidth Usage by Destination Port</center></h1>
+        
+        <!-- Pie Chart for Top 15 Bandwidth Usage by Destination Port -->
+        <img src="{{ pie_src_dst }}" alt="Pie Chart for Top 15 Bandwidth Usage by Destination Port">
+    </div>
+</body>
+</html>

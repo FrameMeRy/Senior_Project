@@ -1,0 +1,1 @@
+"C:\Users\googl\AppData\Local\Microsoft\WindowsApps\python.exe" "C:\Users\googl\Desktop\project\fw_mail.py"

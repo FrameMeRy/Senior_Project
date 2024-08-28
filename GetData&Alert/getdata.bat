@@ -1,0 +1,1 @@
+C:\Users\Yoga2\AppData\Local\Microsoft\WindowsApps\python.exe "C:\Users\Yoga2\Desktop\New folder\get_data.py"
